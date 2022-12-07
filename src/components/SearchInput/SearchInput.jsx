@@ -1,8 +1,15 @@
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { change } from '../../redux/slice';
+
 import { StyledInput } from './Styles';
 
 
-const SearchInput = ({filter, onChange}) => {
+const SearchInput = () => {
+  const filter = useSelector(state => state.filter);
+  const dispatch = useDispatch();
+  
+  const handleChange = (evt) => dispatch(change(evt.target.value));
+
   return (
     <StyledInput>
       <p className="inputTitle">Filter by name:</p>
@@ -11,16 +18,11 @@ const SearchInput = ({filter, onChange}) => {
         type="text"
         name="filter"
         title="Please enter the name"
-        onChange={onChange}
+        onChange={handleChange}
         value={filter}
       />
     </StyledInput>
   );
 };
-
-SearchInput.propTypes = {
-    filter: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-}
 
 export default SearchInput;
